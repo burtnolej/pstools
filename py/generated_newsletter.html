@@ -1,0 +1,623 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="filelist.xml" rel="File-List"/>
+<link href="editdata.mso" rel="Edit-Time-Data"/>
+<link href="themedata.thmx" rel="themeData"/>
+<link href="colorschememapping.xml" rel="colorSchemeMapping"/>
+<link href="styles.css" rel="stylesheet"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>
+      Velox Documents2
+    </title>
+<meta content="Jon Butler" name="author"/>
+<style>
+       body {
+         padding:0;
+         background-color: #f8f8f8;
+         /*line-height: 24px; */
+         border:none;
+         border-collapse: collapse; 
+       }
+    
+       table {
+         border:none;  
+         line-height: 24px;
+         margin:0%;
+         padding:0px;  
+       }     
+    
+       table.banner {
+         width:520px;
+         background-color: #22233D;  
+         line-height: 12px;          
+         padding-top: 4px; 
+         padding-bottom: 4px;  
+
+
+       }
+    
+       table.item {
+         width:520px;    
+         height:250px;
+         background-color:"#F2F2F2";   
+
+       }
+
+       table.container { 
+         width:520px;
+       }
+
+       table.footer {
+         width:520px; 
+         background-color:#B6B9C4;  
+  
+       }
+
+       tr {   
+         margin:0%;
+         padding:0px; 
+       }
+
+       tr.banner {
+       }      
+          
+       td {   
+         font-family: Arial, sans-serif;;
+         font-size: 12px;   
+          margin:0%;
+          padding:0px; 
+       }
+       
+       td.banner { 
+         padding-left: 48px; 
+         padding-right: 48px;  
+       }     
+       
+       td.banner_titlerow {
+         font-family: Arial, sans-serif;
+         font-size: 40px;
+         color: rgb(99, 173, 236);
+         font-weight: bold;   
+         padding-left: 48px; 
+         padding-right: 48px;  
+           padding-top:24px; 
+           padding-bottom:24px;
+         line-height: 24px;        
+          border:none;
+         border-collapse: collapse; 
+       }   
+       
+      td.banner_daterow {
+          font-family: Arial, sans-serif;
+          font-size: 12px;
+           padding-top:24px; 
+           padding-bottom:24px;
+         padding-left: 48px; 
+         padding-right: 48px;  
+          color :#FFF;
+          border:none;
+      }
+       td.item {
+         line-height: 24px;
+         color :#3E2C73; 
+         padding-left: 48px; 
+         padding-right: 48px;  
+       }    
+
+       td.item_button {
+         line-height: 24px;
+         color :#3E2C73; 
+         padding-left: 46px; 
+         padding-right: 48px;  
+       }
+       
+       
+       
+       td.item_section {
+         line-height: 24px;
+         font-family: Arial, sans-serif;;
+         font-size: 30px;
+         font-color: #31345C; 
+         color: #31345C;
+         font-weight: bold; 
+         padding-left: 48px; 
+         padding-right: 48px;  
+         padding-top: 32px; 
+         padding-bottom: 12px; 
+       } 
+       
+       td.item_title {
+         line-height: 24px;
+         font-family: Arial, sans-serif;;
+         font-size: 20px;
+         font-color: #3E2C73;
+         padding-left: 48px; 
+         padding-right: 48px;  
+       }     
+       
+       tr.item_title {
+         line-height: 32px;
+         font-family: Arial, sans-serif;;
+         font-size: 20px;
+         font-weight:bold;
+         color: #3E2C73;
+         padding-left: 48px; 
+         padding-right: 48px;  
+       } 
+       
+       tr.item_spacer {
+		 height:24px;
+          }
+       td.item_spacer {
+          }
+       tr.section_spacer {
+         padding-top:48px;
+          }
+       td.section_spacer {
+         padding-top:48px;
+          }
+       td.item_subtitle {
+         line-height: 24px;
+         font-family: Arial, sans-serif;;
+         font-size: 12px;
+         font-color: #22233D;
+         padding-left: 48px; 
+         padding-right: 48px;  
+         padding-top: -12px;     
+          padding-bottom: 12px;
+       }
+                 
+        td.item_date {
+         line-height: 24px;
+         font-family: Arial, sans-serif;;
+         font-size: 12px;
+         font-color: #22233D;
+         padding-left: 48px; 
+         padding-right: 48px;   
+         padding-top:12px;
+         padding-bottom:12px;
+       }      
+       
+       
+       
+       
+       td.tablebutton{
+         background-color:rgb(244, 239, 239); 
+         border-color: #3E2C73;
+         background-color :#3E2C73;
+         border-width: 0px;
+         border-style: solid;
+         color: #FFF;
+         text-decoration: none;
+         text-align: center;
+         vertical-align: middle;
+         font-weight:bold;
+         font-size:10px;   
+         line-height:4px;  
+         margin-left:0%;  
+         padding-left:0; 
+         height:20px;
+         width:100px;
+       }             
+       
+    td.latesttablebutton{    
+          background-color:rgb(244, 239, 239); 
+         border-color: #3E2C73;
+         background-color: #d90819;
+         border-width: 0px;
+         border-style: solid;
+         color:#f9f8f8;
+         text-decoration: none;
+         text-align: center;
+         vertical-align: middle;
+         font-weight:bold;
+         font-size:10px;   
+         line-height:4px;  
+         margin-left:0%;  
+         padding-left:0; 
+         height:20px;
+         width:100px;
+
+    }
+    
+                  
+       td.banner_button_row { 
+         padding-left: 48px; 
+         padding-right: 48px;          
+         padding-top: 12px; 
+         padding-bottom: 12px;
+         }     
+
+       td.banner_button_descriptionrow { 
+         padding-left: 48px; 
+         padding-right: 48px;          
+         padding-top: 32px;    
+         font-size:10px;
+         line-height:8px; 
+         font-weight:bold;   }
+      
+         
+       td.banner_descriptionrow { 
+         padding-left: 48px; 
+         padding-right: 48px;          
+         font-size:12px;
+         line-height:20px; 
+         font-weight:500;    
+         padding-bottom: 24px;
+         } 
+         
+       td.banner_button{ 
+         border-color: #31345C;
+         background-color :#22233D;
+         border-width: 0px;
+         border-style: solid;
+         text-align: center;
+         vertical-align: middle; 
+         color: #22233D;        
+         background-color : rgb(99, 173, 236);
+         font-size:10;
+         line-height:8px;               
+         margin-left:0%;  
+         padding-left:0;   
+         width:80px; 
+         height: 40px;  
+       }          
+       
+      a.banner_button {
+         font-size:9px;
+         line-height:8px; 
+         font-weight:500;
+         font-family: Arial, sans-serif;
+         color: #22233D; 
+         text-decoration: none;
+         }
+
+       td.footer {                           
+         color :#22233D;
+         padding-left: 48px; 
+         padding-right: 48px;  
+         line-height:12px;
+       }       
+       
+     td.footer_icon {  
+         text-align: center;
+         vertical-align: middle; 
+      }
+
+    td.footer_copyright {
+        padding-top:10px;
+        font-size: 10px;
+        font-weight:bold;   
+        font-family: Arial, sans-serif;
+        text-align:center;
+        color :#22233D;
+         padding-left: 48px; 
+         padding-right: 48px;    
+         padding-top: 12px; 
+         padding-bottom: 12px;  
+     }    
+     
+
+               
+    td.footer_legalrow_nopad {
+        font-size: 10px;
+        font-family: Arial, sans-serif;
+        color :#22233D; 
+         padding-left: 48px; 
+         padding-right: 48px; 
+         line-height:12px;  
+         text-align: right; 
+         vertical-align:top;
+    }    
+               
+             
+    td.footer_legalrow {
+        font-size: 10px;   
+        font-family: Arial, sans-serif;
+        color :#22233D;
+         padding-left: 48px; 
+         padding-right: 12px;   
+         line-height:12px;    
+         text-align: top;
+    }     
+    
+       td.footer_titlerow {
+         font-family: roboto;
+         font-size: 32px;
+         color: #22233D;
+         font-weight: bold;  
+         padding-top:24px; 
+         padding-bottom:24px;  
+         padding-left: 48px; 
+         padding-right: 48px;  
+         line-height:12px 
+       }    
+       
+       td.contactbutton{
+         color :#22233D;
+         background-color: #FF851E;
+        font-family: Arial, sans-serif;
+        font-weight:bolder;
+        font-size: 10px;
+         text-decoration: none;
+         text-align: center;
+         vertical-align: middle;           
+       }
+    
+       td.high {        
+       }
+    
+       td.thin {        
+         background-color: #31345C;
+         border-top-color:#FF851E;
+         border-width:2px;
+         border:solid;
+         color :#31345C;
+       }
+    
+       td.right {
+       }
+
+    </style>
+</head>
+<body>
+<table align="center" class="container">
+<!-- banner section -->
+<!-- banner section -->
+<!-- banner section -->
+<tr bgcolor="#22233D">
+<td>
+<div align="center">
+<table bgcolor="#22233D" class="banner">
+<tr class="banner_daterow">
+<td class="banner_daterow" colspan="2">
+                  October, 2023
+                </td>
+</tr>
+<tr>
+<td class="banner_icon" style="padding-left:48px">
+<a href="https://veloxfintech.com/"><img src="velox_logo_medium.svg" style="width: 60px; height: auto;"/></a>
+</td>
+<td></td>
+<td class="banner_icon">
+<a href="https://medium.com/@butlerjon72"><img src="medium_normal_small.svg"/></a>
+</td>
+<td class="banner_icon">
+<a href="https://www.linkedin.com/company/veloxbuildfaster/"><img src="linkedin_normal_small.svg"/></a>
+</td>
+<td class="banner_icon">
+<a href="https://twitter.com/veloxbuildfast?s=20"><img src="twitter_normal_small.svg"/></a>
+</td>
+</tr>
+<tr>
+<td class="banner_titlerow" colspan="5">
+                  THE VELOX             <br/>
+<span style="color:white">BUILD FASTER<span style="font-size: 12px">®</span></span> DIGEST
+                </td>
+</tr>
+<tr>
+<td class="banner_descriptionrow" colspan="5">
+                  As part of the product development function of our vCore platform we keep abreast of the latest innovations and opinions on
+                  developer productivity from both Capital Markets and the wider technology industry. Our regular Digest gives you access to
+                  our original thought leaderships and articles and events that caught our eyes.  
+                </td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+<!-- Item Section -->
+<!-- Item Section -->
+<!-- Item Section -->
+<tr>
+<td>
+<div align="center">
+<table class="item"><tr class="section_spacer"><td></td></tr><tr class="item_section"> <td class="item_section">Latest Activity</td> <tr class="item_spacer">
+<td></td>
+</tr>
+<tr class="item_title">
+<td class="item_title">T+1 highlight the need to invest in dev</td>
+</tr>
+<tr class="item_subtitle">
+<td class="item">Mike Wilkins | Head of GTM, Velox.</td>
+</tr>
+<tr class="item_date">
+<td class="item_date">3-Apr-23</td>
+</tr>
+<tr class="item_content">
+<td class="item">
+<p>Every CIOs dream is of an organization with common software, so why does the dream so easily become a nightmare? Building something to share is totally different to building something to use yourself</p>
+</td>
+</tr>
+<tr class="item_button" style="height:0.5in">
+<td class="item">
+<div align="left">
+<table>
+<tr>
+<td class="Normal">
+<a href="article/t1_highlights_the_need_for_dev_platforms" style="position:absolute; top:0; left:0; display:inline-block; width:210px; height:100px; z-index:5;"></a>
+<span style="text-underline:none;color:#f9f6f608;">View</span> </td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+ <tr class="item_spacer">
+<td></td>
+</tr>
+<tr class="item_title">
+<td class="item_title">The Future of Trading Technology is Augmented</td>
+</tr>
+<tr class="item_subtitle">
+<td class="item">Mike Wilkins | Head of GTM, Velox.</td>
+</tr>
+<tr class="item_date">
+<td class="item_date">21-Nov-23</td>
+</tr>
+<tr class="item_content">
+<td class="item">
+<p>There are studies that suggest that every $1 spent on the Apollo space program paid back $14 in GDP over the next 30 years. Whether that is true or not, it certainly inspired a generation of engineers and scientists to think big.So, what is the equivalent of a "moon shot" for front office technology?</p>
+</td>
+</tr>
+<tr class="item_button" style="height:0.5in">
+<td class="item">
+<div align="left">
+<table>
+<tr>
+<td class="Latest">
+<a href="article/the_future_of_trading_tech_is_augmented" style="position:absolute; top:0; left:0; display:inline-block; width:210px; height:100px; z-index:5;"></a>
+<span style="text-underline:none;color:#f9f6f608;">View</span> </td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+ <tr class="item_spacer">
+<td></td>
+</tr>
+<tr class="item_title">
+<td class="item_title">A team trading tech update</td>
+</tr>
+<tr class="item_subtitle">
+<td class="item">Mike Wilkins | Head of GTM, Velox.</td>
+</tr>
+<tr class="item_date">
+<td class="item_date">21-Nov-23</td>
+</tr>
+<tr class="item_content">
+<td class="item">
+<p>I was invited recently to join a panel on UI/UX in Trading. In preparation I wrote down what the differences are between UX &amp; UI from my perspective, heres what I came up with : UX is people centric and UI is data/ I/O centric</p>
+</td>
+</tr>
+<tr class="item_button" style="height:0.5in">
+<td class="item">
+<div align="left">
+<table>
+<tr>
+<td class="Normal">
+<a href="article/ateam_trading_tech_update" style="position:absolute; top:0; left:0; display:inline-block; width:210px; height:100px; z-index:5;"></a>
+<span style="text-underline:none;color:#f9f6f608;">View</span> </td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+ <tr class="item_spacer">
+<td></td>
+</tr>
+<tr class="item_title">
+<td class="item_title">How does legacy become legacy ?</td>
+</tr>
+<tr class="item_subtitle">
+<td class="item">Mike Wilkins | Head of GTM, Velox.</td>
+</tr>
+<tr class="item_date">
+<td class="item_date">30 Oct 2023</td>
+</tr>
+<tr class="item_content">
+<td class="item">
+<p>I was asked recently about the biggest challenge I faced during my 20+ years managing sales &amp; trading technology in Capital Markets. My answer was managing the difference between the front office business demand for technological innovation, such as new systems and upgrades and the ability of the front office technology department to supply it, quickly and affordably.</p>
+</td>
+</tr>
+<tr class="item_button" style="height:0.5in">
+<td class="item">
+<div align="left">
+<table>
+<tr>
+<td class="Normal">
+<a href="article/how_does_legacy_become_legacy" style="position:absolute; top:0; left:0; display:inline-block; width:210px; height:100px; z-index:5;"></a>
+<span style="text-underline:none;color:#f9f6f608;">View</span> </td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</tr>
+<tr>
+<td class="item_spacer"></td>
+</tr>
+<tr class="item_blank">
+<td></td>
+</tr>
+<tr class="section_spacer"><td></td></tr>
+</table>
+</div>
+</td>
+</tr>
+<!-- Footer section -->
+<!-- Footer section -->
+<!-- Footer section -->
+<tr>
+<td>
+<div align="center">
+<table class="footer">
+<tr>
+<td class="footer_titlerow" style="width:60%">
+                  ABOUT THE VELOX DIGEST
+                </td>
+<td class="footer_icon" colspan="3">
+<a href="https://veloxfintech.com/"><img src="velox_emblem.svg"/></a>
+</td>
+</tr>
+<tr>
+<td class="footer">
+                  Stay up-to-speed as we make it our goal to provide an overview of meaningful and useful commentary on developments and
+                  innovations in fintech and capital markets, centred around how to build faster
+                </td>
+<td class="footer" colspan="3">
+<table style="width:100%">
+<tr>
+<td class="footer_icon">
+<a href="https://twitter.com/veloxbuildfast?s=20"><img src="twitter_normal_vsmall.svg"/></a>
+</td><td class="footer_icon">
+<a href="https://www.linkedin.com/company/veloxbuildfaster/"><img src="linkedin_normal_vsmall.svg"/></a>
+</td><td class="footer_icon">
+<a href="https://www.linkedin.com/company/veloxbuildfaster/"><img src="medium_normal_vsmall.svg"/></a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="footer" style="padding-top:12px;padding-bottom:12px;">
+                  Founded in 2017, Velox Financial Technology is enabling software development teams across the global Capital Markets industry
+                  to build high-performance user-facing systems up to 10x faster
+                </td>
+<td class="footer" colspan="3">
+<table style="width:100%">
+<tr>
+<td class="contactbutton high">
+<a href="Velox__Introduction.pdf" style="text-decoration:none"><span style="color: #FFF;">CONTACT US</span></a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="footer_legalrow">
+<span style="font-weight: bold;">Unsubscribing<br/></span>
+                  You are receiving this email because you have shown an interest in Velox previously. <br/>Want to change how you receive these emails?You can unsubscribe from this list.
+                </td>
+<td class="footer_legalrow_nopad" colspan="3">
+<span style="font-weight: bold;">Our mailing address:<br/></span>
+                  Velox Financial Technology (UK) Limited, 1 Brassey Road,Shrewsbury, SY3 7FA,United Kingdom
+                </td>
+</tr>
+<tr>
+<td class="footer_copyright" colspan="4">
+                  Copyright © 2023 Velox Financial Technology (UK)) Limited, All rights reserved.
+                </td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

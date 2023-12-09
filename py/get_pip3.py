@@ -1,0 +1,1 @@
+those use cases are not areas where vCore will provide enough acceleration to justify our price point. for instance "adding custom fields" will be 

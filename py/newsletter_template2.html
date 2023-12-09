@@ -1,0 +1,495 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <link rel=File-List href="filelist.xml">
+    <link rel=Edit-Time-Data href="editdata.mso">
+    <link rel=themeData href="themedata.thmx">
+    <link rel=colorSchemeMapping href="colorschememapping.xml">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Velox Documents2</title>
+    <meta name="author" content="Jon Butler" />
+
+<!--https://www.emailonacid.com/blog/article/email-development/how-do-i-get-rid-of-the-lines-in-outlook-emails/-->
+
+
+<style>
+    body {
+        height:100%;
+        margin:0;
+        padding:0;
+        width:100%;
+        background-color: #f8f8f8;
+        line-height: 24px;
+    }
+    
+    table {
+        line-height: 24px;
+        border: none;
+        margin:0%;
+        padding:0%;
+    }
+
+    table.banner {
+        width:520px;
+        height: 400px;
+        line-height: 24px;
+        font-family: arial;
+        font-size: 20px;
+        border: none;
+        margin:0%;
+        padding:0%;
+        }
+        
+    table.item {
+        width:520px;
+        height: 400px;
+        /*margin:0%;
+        margin-top: 10%;
+        margin-bottom: 10%;
+        padding:0%;*/
+        /*:background-color:rgb(244, 239, 239);*/
+    }
+
+    table.footer {
+        width:520px;
+        height: 400px;
+        margin-top: 40px;
+        margin-bottom: 12px;
+        padding:0%;
+        /*:background-color: #22233D;*/
+        }
+
+    table.container {
+        border:0;
+        width :640px;
+    }
+    
+    tr.item {
+        border:none;
+        border-collapse: collapse;
+        margin:0%;
+        margin-top: 10%;
+        margin-bottom: 10%;
+        padding:0%;
+    }
+
+
+    tr.banner {
+        border:0;
+        }
+
+    tr.banner_daterow {
+        font-family: arial;
+        font-size: 10.5pt;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        height :40px;
+        color :#FFF;
+        border:0;
+    }
+
+    tr.banner_veloxrow {
+        font-family: arial;
+        font-weight: bold;
+        font-size: 30pt;
+        margin-top: 0.125in;
+        margin-bottom: 0.125in;
+        height :0.76in;
+        color :#FFF;
+        border:0;
+        }
+    
+    tr.banner_titlerow {
+        height :auto;
+        font-family: arial;
+        font-size: 26pt;
+        color: rgb(99, 173, 236);
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 18px;
+        border:0;
+    }
+
+    tr.banner_descriptionrow {
+        height:0.50in;
+        margin-top: 0px;
+        margin-bottom: 8px;
+        font-family: arial;
+        font-size: 10.5pt;        
+        color :#FFF;
+        border:none;
+        border-collapse: collapse;
+    }
+
+    tr.banner_socialsrow {
+        height:0.3in;
+        margin-top: 0in;
+        margin-bottom: 0in;
+        border:none;
+        border-collapse: collapse;
+    }
+    
+    td.banner {
+        border:none;
+        border-collapse: collapse;
+    }
+    
+    tr.item_section {
+        line-height: 20px;
+        height:auto;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        font-family: arial;
+        font-size: 28px;
+        font-weight: bold;      
+        color :#22233D;
+        border:none;
+        border-collapse: collapse;
+        padding-top: 48px;
+        padding-bottom: 48px;
+        
+    }
+
+    tr.item_title {
+        height:auto;
+        margin-top: 12px;
+        margin-bottom: 0px;
+        font-family: arial;
+        font-size: 24px;  
+        font-weight: bold;   
+        color :#63ADEC;
+        border:none;
+        border-collapse: collapse;
+    }
+
+    tr.item_subtitle {
+        height:auto;
+        margin-top: 0px;
+        font-family: arial;
+        font-size: 16px;     
+        color :#22233D;
+        border:none;
+        border-collapse: collapse;
+    }
+
+    tr.item_content {
+        margin-top: 0px;
+        line-height: 24px;
+        margin-bottom: 12px;
+        font-family: arial;
+        font-size: 16px;    
+        color :#22233D;
+        border:none;
+        border-collapse: collapse;
+    }
+
+    tr.item_blank {
+        height:14px;
+        border:none;
+        border-collapse: collapse;
+    }
+
+    tr.item_button {
+        height:auto;
+        margin:0px;
+        margin-top: 0px;
+        /*margin-bottom: 14px;
+        margin-bottom: 40px;*/
+        border:none;
+        border-collapse: collapse;
+        vertical-align: middle;
+
+    }
+
+    td.item {
+        border:none;
+        border-collapse: collapse;
+        /*padding-left: 14pt;
+        padding-right: 14pt;*/
+        margin:0%;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding:0%;
+    }
+
+    td.item_button {
+        border:none;
+        border-collapse: collapse;
+        /*padding-left: 14pt;
+        padding-right: 14pt;*/
+        margin:0%;
+        /*margin-top: 12px;
+        margin-bottom: 40px;*/
+        vertical-align: middle;
+        padding:0%;
+    }
+
+    td.item_title {
+        border:none;
+        border-collapse: collapse;
+        /*padding-left: 14pt;
+        padding-right: 14pt;*/
+        margin:0%;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding:0%;
+        font-family: arial;
+        font-size: 24px; 
+    }
+
+    td.item_date {
+        color:#22233D;
+        border:none;
+        border-collapse: collapse;
+        /*padding-left: 14pt;
+        padding-right: 14pt;*/
+        margin:0%;
+        padding:0%;
+        font-family: arial;
+        font-size: 12px; 
+    }
+
+    tr.item_date {
+        color:#22233D;
+        border:none;
+        border-collapse: collapse;
+        /*padding-left: 14pt;
+        padding-right: 14pt;*/
+        margin:0%;
+        padding:0%;
+        font-family: arial;
+        font-size: 12px; 
+    }
+
+    td.item_section {
+        border:none;
+        border-collapse: collapse;
+        /*padding-left: 14pt;
+        padding-right: 14pt;*/
+        margin-top: 40px;
+        margin-bottom: 40px;
+        padding:0%;
+        font-family: arial;
+        font-size: 32px; 
+    }
+
+
+
+    td.tablebutton{
+        /*:background-color:rgb(244, 239, 239);
+        border-color: #3E2C73;
+        border-width: 1pt;
+        border-style: solid;*/
+        color:#22233D;
+        background-color: #63ADEC;
+        font-family: Arial, sans-serif;
+        font-weight:bolder;
+        font-size: 10pt; 
+        text-decoration: none;
+        text-align: center;
+        vertical-align: middle;
+        width:30pt;
+        height:20.0pt;
+    }
+
+    td.latesttablebutton{
+        /*:background-color:rgb(244, 239, 239);
+        border-color: #3E2C73;
+        border-width: 1pt;
+        border-style: solid;*/
+        color:#f9f8f8;
+        background-color: #d90819;
+        font-family: Arial, sans-serif;
+        font-weight:bolder;
+        font-size: 10pt; 
+        text-decoration: none;
+        text-align: center;
+        vertical-align: middle;
+        width:30pt;
+        height:20.0pt;
+    }
+
+    
+    tr.item {
+        border:0;
+        margin:0%;
+    }
+
+    td.footer {
+        border:none;
+        border-collapse: collapse;
+        margin-top: 40px;
+        margin-bottom: 12px;
+        padding:0%;
+    }
+
+    tr.footer_logorow {
+        font-family: arial;
+        font-weight: bold;
+        font-size: 30pt;
+        padding-top: 12px;
+        margin-top: 0.125in;
+        margin-bottom: 0.125in;
+        height :0.76in;
+        color :#FFF;
+        border:0;
+        }
+
+    tr.footer_veloxrow {
+        height :auto;
+        font-family: arial;
+        font-size: 26pt;
+        color: #22233D);
+        font-weight: bold;
+        margin-top: 14px;
+        margin-bottom: 14px;
+        border:0;
+    }
+
+    tr.footer_descriptionrow {
+        height:0.59 in;
+        margin-top: 0in;
+        margin-bottom: 0.25in;
+        font-family: arial;
+        font-size: 10.5pt;        
+        color :#22233D;
+        border:none;
+        border-collapse: collapse;
+    }
+
+    tr.footer_socialsrow {
+        height:auto;
+        margin-top: 0in;
+        margin-bottom: 0in;
+        border:none;
+        border-collapse: collapse;
+        padding-bottom: 12px;
+    }
+
+    tr.footer_legalrow {
+        height:auto;
+        margin-top: 0px;
+        margin-bottom: 0.25in;
+        font-family: arial;
+        font-size: 9pt;        
+        color :#22233D;
+        line-height: 140%;
+        border:none;
+        border-collapse: collapse;
+        padding-top: 12pt;
+        padding-bottom: 20px;
+    }
+    td.contactbutton{
+        background-color:#FF851E;
+
+        color: #b6b9c4;
+        font-family: Arial, sans-serif;
+        font-weight:bolder;
+        font-size: 10.5pt; 
+        text-decoration: none;
+        text-align: center;
+        vertical-align: middle;
+        width: 60px;
+        height: 36px;
+    }
+
+</style>
+</head>
+
+
+<body >
+    <table class="container" align="center">
+        
+        <!-- Banner section -->
+        <tr bgcolor="#22233D" class="banner">
+            <td class="banner">
+                <div align=center>
+                    <table class="banner">
+                        <tr class="banner_daterow"><td class="banner">October, 2023</td></tr>
+                        <tr class="banner_veloxrow"><td class="banner"><a href="https://veloxfintech.com/"><img style="max-width: 120pt; height: auto;" src="velox_logo.png"></a></td></tr>
+                        <tr class="banner_titlerow"><td class="banner">THE VELOX<br>
+                            <span style="color:white">BUILD FASTER<span style="font-size: 12px"></span></span> DIGEST</td></tr>
+                        <tr class="banner_descriptionrow"><td class="banner">As part of the product development function of our vCore platform we keep abreast of the latest innovations and opinions on developer productivity from both Capital Markets and the wider technology industry. Our regular Digest gives you access to our original thought leaderships and articles and events that caught our eyes.
+                           &nbsp;</td></tr>
+                    </table>
+                </div>
+            &nbsp;</td>
+        </tr>
+
+
+      <tr bgcolor="#F2F2F2" class="item">
+        <td class="item">
+          <div align="center">
+            <table class="item">
+			
+			
+			
+
+			  
+			  
+			  
+			  
+			  
+              <tr class="item_blank">
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+	  
+	  
+	  
+	  
+	<tr><td><i></i></td></tr>
+        <!-- Footer section -->
+        <tr bgcolor="#b6b9c4" class="footer">
+            <td class="footer">
+                <div align="center">
+                    <table class="footer">
+                        <tr class="footer_veloxrow"><td class="footer">About the Velox Digest&nbsp;</td></tr>
+                        <tr class="footer_descriptionrow"><td class="footer">Stay up-to-speed as we make it our goal to provide an overview of meaningful and useful commentary on developments and innovations in fintech and capital markets, centred around how to build faster.<br><br>
+                        Founded in 2017, Velox Financial Technology is enabling software development teams across the global Capital Markets industry to build high-performance user-facing systems up to 10x faster.&nbsp;</td></tr>
+                        <tr class="footer_socialsrow"><td class="footer"><a href="https://twitter.com/veloxbuildfast?s=20"><img src="cid:twitter.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.linkedin.com/company/veloxbuildfaster/"><img src="cid:linkedin.png"></a></td></tr>
+                        <tr class="item_button">
+                            <td class="item">
+                                <div align=left> 
+                                    <table>
+                                        <tr>
+                                            <td class="contactbutton">
+                                                <a href="Velox__Introduction.pdf"><span style="text-underline:none;color: #FFF;">CONTACT US</span></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="footer_logorow"><td class="banner"><a href="https://veloxfintech.com/"><img style="max-width: auto; height: auto;" src="cid:velox_emblem.png"></a></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                         </tr>
+                        <tr class="footer_legalrow"><td class="footer"><span style="font-style:italic">Copyright; 2023 Velox Financial Technology (UK)) Limited, All rights reserved.</span><br>
+                        You are receiving this email because you have shown an interst in Velox previously.<br><br>
+                        <span style="font-weight: bold;">Our mailing address is:</span><br>
+                        Velox Financial Technology (UK) Limited<br>
+                        1 Brassey Road<br>
+                        Shrewsbury, SY3 7FA<br>
+                        United Kingdom&nbsp;<br><br>
+                        Want to change how you receive these emails?<br>
+                        You can unsubscribe from this list.</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
+
+
+
+
+
+
+

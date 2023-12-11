@@ -1,0 +1,7 @@
+
+need to make sure the unpack/install works from the Write-Sharepoint script
+need to rename write-Sharepoint
+need to create argumenns for write-sharepoint (packup / install)
+need to make install scripts accessible by remote users
+
+got the ISE / powerscript debugger to work

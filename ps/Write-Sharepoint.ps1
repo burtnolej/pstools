@@ -3,6 +3,11 @@
  )
 
 
+# TODO ###
+
+need to take out JB home directory
+
+
 # load the utilites script
 $WORKINGDIR = Get-Location
 $MYHOME=Get-Content -Path Env:\HOMEPATH

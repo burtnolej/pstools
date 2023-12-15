@@ -131,27 +131,27 @@ wb = openxl("website_map.xlsx")
 ws_data = wb["DATA"]
 ws_map = wb["MAP"]
     
-get_range(wb,"DATA","C1:AL1","colheader")
+get_range(wb,"DATA","C1:AM1","colheader")
 get_range(wb,"DATA","A2:A13","rowtitle")
 get_range(wb,"DATA","B2:B13","filetype")
-get_range(wb,"DATA","C2:AL13","data")
+get_range(wb,"DATA","C2:AM13","data")
 
 get_range(wb,"MAP","B1:E1","colheader")
 get_range(wb,"MAP","A2:A13","rowtitle")
 get_range(wb,"MAP","B2:E13","data")
 
 get_range(wb,"INCLUSION","B1:D1","colheader")
-get_range(wb,"INCLUSION","A2:A37","rowtitle")
-get_range(wb,"INCLUSION","B2:D37","data")
+get_range(wb,"INCLUSION","A2:A38","rowtitle")
+get_range(wb,"INCLUSION","B2:D38","data")
 
-get_range(wb,"CONTENTTYPE","A2:A37","key")
-get_range(wb,"CONTENTTYPE","B2:B37","value")
+get_range(wb,"CONTENTTYPE","A2:A38","key")
+get_range(wb,"CONTENTTYPE","B2:B38","value")
 
-get_range(wb,"VISIBILITY","A2:A37","key")
-get_range(wb,"VISIBILITY","B2:B37","value")
+get_range(wb,"VISIBILITY","A2:A38","key")
+get_range(wb,"VISIBILITY","B2:B38","value")
 
-get_range(wb,"LATEST","A2:A37","key")
-get_range(wb,"LATEST","B2:B37","value")
+get_range(wb,"LATEST","A2:A38","key")
+get_range(wb,"LATEST","B2:B38","value")
 
 get_dict_from_ranges(contenttype_map,contenttype_key_range,contenttype_value_range)
 get_dict_from_ranges(visibility_map,visibility_key_range,visibility_value_range)

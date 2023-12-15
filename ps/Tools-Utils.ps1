@@ -1,9 +1,4 @@
 
-#https://veloxfintechcom.sharepoint.com/sites/VeloxSharedDrive/Shared%20Documents/General/Tools/Tools.zip
-#curl -o Tools.zip https://veloxfintechcom.sharepoint.com/sites/VeloxSharedDrive/Shared%20Documents/General/Tools/Tools.zip
-#. "c:\scratch\b.ps1"
-# &"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" .\96x96.png .\72x72.png .\64x64.png .\48x48.png .\36x36.png .\32x32.png .\24x24.png .\16x16.png velox.ico
-
 function Install-ToolsZip {
     [CmdletBinding()]
     param (
@@ -12,12 +7,8 @@ function Install-ToolsZip {
         [Parameter(Mandatory)]
         [String]$DestinationPath
     )
-
-    #$ZipFilePath = "C:\Users\burtn\Downloads\Tools.zip"
-    #$DestinationPath  = "C:\Users\burtn\Tools\Deploy"
  
     Expand-Archive -LiteralPath $ZipFilePath -DestinationPath $DestinationPath
-
 
     # Create shortcut file and put on the desktop
     $shortcutFile = "$lnk_folder\" + "velox.lnk"
@@ -122,39 +113,37 @@ function Gen-Icon {
     $null = $command.Append('"')
 
     Invoke-Expression "& $command.ToString()"
-}
 
+    
+    # &"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" .\96x96.png .\72x72.png .\64x64.png .\48x48.png .\36x36.png .\32x32.png .\24x24.png .\16x16.png velox.ico
+}
 
 function Log-Output {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [ref]$result,
         [String]$status,
-        [Parameter(Mandatory)]
         [String]$action,
-        [Parameter(Mandatory)]
         [String]$object,
-        [Parameter(Mandatory)]
         [String]$message,
-        [Parameter()]
         [String]$errormsg
     )
 
     $LOGTIME=Get-Date -Format "MMddyyyy_HHmmss"
     
-    $SB = New-Object -TypeName System.Text.StringBuilder
+    $sb = New-Object -TypeName System.Text.StringBuilder
     
-    $null = $SB.Append($LOGTIME.PadRight(18," "))
-    $null = $SB.Append($status.PadRight(7," "))
-    $null = $SB.Append($action.PadRight(20," "))
-    $null = $SB.Append($message.PadRight(20," "))
-    $null = $SB.Append($object.PadRight(100," "))
+    $null = $sb.Append($LOGTIME.PadRight(18," "))
+    $null = $sb.Append($status.PadRight(7," "))
+    $null = $sb.Append($action.PadRight(20," "))
+    $null = $sb.Append($message.PadRight(20," "))
+    $null = $sb.Append($object.PadRight(100," "))
     
 
     if ($PSBoundParameters.ContainsKey('errormsg')) {
-        $null = $SB.Append($errormsg)
+        $null = $result.Append($errormsg)
     }
-    $SB.ToString()
+    $result.value = $sb.ToString()
 }
 
 function Write-OneDrive {
@@ -167,54 +156,67 @@ function Write-OneDrive {
         [Parameter(Mandatory)]
         [String]$WebUrl,
         [Parameter(Mandatory)]
-        [String]$LibraryName
+        [String]$LibraryName,
+        [Parameter(Mandatory)]
+        [String]$TargetFile
     )
+
+    $output=$null
 
     $CLIENTDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll"
     $CLIENTRUNTIMEDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
-
+    
     if (Test-Path -Path $CLIENTDLL) {
-        Log-Output "OK" "Check Onedrive DLLs"  $CLIENTDLL "Found!"
+        Log-Output -result ([ref]$output) -status "OK" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Found!"
+        write-host  $output
     }
     else {
-        Log-Output "ERROR" "Check Onedrive DLLs"  $CLIENTDLL "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
+        write-host  $output
     }
 
     Add-Type -Path $CLIENTDLL
     Add-Type -Path $CLIENTRUNTIMEDLL
 
-    #$AdminPassword ="4o5yWohgxOB8"
+    $AdminPassword ="4o5yWohgxOB8"
+
+    $SecurePassword = ConvertTo-SecureString $AdminPassword -AsPlainText -Force
 
     try {
-        $Credential =Get-Credential -Credential $AdminName
-    }
+        if (-not ([string]::IsNullOrEmpty($AdminPassword)))
+        {
+            $Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
+        }
+        else {
+            $Credential =Get-Credential -Credential $AdminName
+            #Setup Credentials to connect
+            $Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password) 
+        }
+    }       
     catch {
-        Log-Output "ERROR" "Get Credential" $AdminName "Failed" $_
-        exit
+            Log-Output -result ([ref]$output) -status "ERROR" -action "Get Credential" -object $AdminName -message "Failed" -errormsg  $_
+            write-host $output
+            exit
     }
+
     
-    #Setup Credentials to connect
-    $Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password)
 
     #Set up the context
     $Context = New-Object Microsoft.SharePoint.Client.ClientContext($WebUrl)
     $Context.Credentials = $Credentials
 
-    #Get the Library
-    $Library =  $Context.Web.Lists.GetByTitle($LibraryName)
+    $targetFolder = $Context.Web.GetFolderByServerRelativeUrl($LibraryName)
 
     #Get the file from disk
     $FileStream = ([System.IO.FileInfo] (Get-Item $SourceFile)).OpenRead()
-
-    #Get File Name from source file path
-    $SourceFileName = Split-path $SourceFile -leaf
 
     #sharepoint online upload file powershell
     $FileCreationInfo = New-Object Microsoft.SharePoint.Client.FileCreationInformation
     $FileCreationInfo.Overwrite = $true
     $FileCreationInfo.ContentStream = $FileStream
-    $FileCreationInfo.URL = $SourceFileName
-    $FileUploaded = $Library.RootFolder.Files.Add($FileCreationInfo)
+    $FileCreationInfo.URL = $TargetFile
+    #$FileUploaded = $Library.RootFolder.Files.Add($FileCreationInfo)
+    $FileUploaded = $targetFolder.Files.Add($FileCreationInfo)
     
     #powershell upload single file to sharepoint online
     $Context.Load($FileUploaded)
@@ -236,39 +238,61 @@ function Get-OneDrive{
         [Parameter(Mandatory)]
         [String]$FileUrl,
         [Parameter(Mandatory)]
+        [String]$FileFolder,
+        [Parameter(Mandatory)]
         [String]$TargetFile
     )
+
+    $output=$null
 
     $CLIENTDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll"
     $CLIENTRUNTIMEDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
 
     if (Test-Path -Path $CLIENTDLL) {
-        Log-Output "OK" "Check Onedrive DLLs"  $CLIENTDLL "Found!"
+        Log-Output -result ([ref]$output) -status "OK" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Found!"
+        write-host  $output
     }
     else {
-        Log-Output "ERROR" "Check Onedrive DLLs"  $CLIENTDLL "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
+        write-host  $output
     }
 
     Add-Type -Path $CLIENTDLL
     Add-Type -Path $CLIENTRUNTIMEDLL
 
-    #$AdminPassword ="4o5yWohgxOB8"
+    $AdminPassword ="4o5yWohgxOB8"
+
+    $SecurePassword = ConvertTo-SecureString $AdminPassword -AsPlainText -Force
+
+    $Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
 
     try {
-        $Credential =Get-Credential -Credential $AdminName
+        if (-not ([string]::IsNullOrEmpty($AdminPassword)))
+        {
+            $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
+        }
+        else {
+            $Credential =Get-Credential -Credential $AdminName
+            $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password) 
+        }
     }
     catch {
-        Log-Output "ERROR" "Get Credential" $AdminName "Failed" $_
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Get Credential" -object $AdminName -message "Failed" -errormsg  $_
+        Write-host $output
         exit
     }
     
+    $FileUrl = $FileFolder + "/" + $FileUrl
+
     $Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
     try {
-        $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password)
+        #$Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password)
+        $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
         $FileInfo = [Microsoft.SharePoint.Client.File]::OpenBinaryDirect($Context,$FileUrl)
     }
     catch {
-        Log-Output "ERROR" "Sharepoint Logon" $AdminName "Failed" $_
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Sharepoint Logon" -object $AdminName -message "Failed" -errormsg  $_
+        write-host $output
         exit
     }
 
@@ -276,5 +300,129 @@ function Get-OneDrive{
     $FileInfo.Stream.CopyTo($WriteStream)
     $WriteStream.Close()
 
-    Log-Output "OK" "Download File" $TargetFile "Downloaded"
+    Log-Output -result ([ref]$output) -status "OK" -action "Download File" -object $TargetFile -message "Downloaded"
+    write-Output $output
 }
+
+function Move-NewJobTitlesCsv {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [String]$AdminName,
+        [Parameter(Mandatory)]
+        [String]$SiteUrl,
+        [Parameter(Mandatory)]
+        [String]$FolderUrl,
+        [Parameter(Mandatory)]
+        [String]$TargetFolderUrl  
+    )
+
+    $output=$null
+
+    $CLIENTDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll"
+    $CLIENTRUNTIMEDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
+
+    if (Test-Path -Path $CLIENTDLL) {
+        Log-Output -result ([ref]$output) -status "OK" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Found!"
+        Write-host $output
+    }
+    else {
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
+        Write-host $output
+    }
+
+    Add-Type -Path $CLIENTDLL
+    Add-Type -Path $CLIENTRUNTIMEDLL
+
+    $AdminPassword ="4o5yWohgxOB8"
+    $SecurePassword = ConvertTo-SecureString $AdminPassword -AsPlainText -Force
+
+    $Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
+
+    try {
+        if (-not ([string]::IsNullOrEmpty($AdminPassword)))
+        {
+            $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
+        }
+        else {
+            $Credential =Get-Credential -Credential $AdminName
+            $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password) 
+        }
+    }
+    catch {
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Get Credential" -object $AdminName -message "Failed" -errormsg  $_
+        Write-host $output
+        exit
+    }
+    
+    try {
+
+        #Get the Folder and Files
+        $Folder=$Context.Web.GetFolderByServerRelativeUrl($FolderUrl)
+        $Context.Load($Folder)
+        $Context.Load($Folder.Files)
+        $Context.ExecuteQuery()
+ 
+        #Iterate through each File in the folder
+        Foreach($File in $Folder.Files)
+        {
+            #Write-Host $File.Name
+            #Write-Host $File.Name.gettype()
+            
+            $TargetFileUrl = Join-Path -Path $TargetFolderUrl -ChildPath  $File.Name
+            $File.MoveTo($TargetFileUrl, [Microsoft.SharePoint.Client.MoveOperations]::Overwrite)
+            $Context.ExecuteQuery()
+        }
+    }
+    catch {
+        Log-Output -result ([ref]$output) -status "ERROR" -action "Sharepoint Logon" -object $AdminName -message "Failed" -errormsg  $_
+        Write-host $output
+        exit
+    }
+
+    return $File.Name
+}
+
+function Run-PythonJobParser {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [String]$jobrules_file,
+        [Parameter(Mandatory)]
+        [String]$person_file,
+        [Parameter(Mandatory)]
+        [String]$organisation_file,
+        [Parameter(Mandatory)]
+        [String]$output_file,
+        [Parameter(Mandatory)]
+        [String]$debugflag,
+        [Parameter(Mandatory)]
+        [String]$delimiter
+    )
+
+
+    $command = New-Object -TypeName System.Text.StringBuilder
+    
+    #$null = $command.Append('"')
+    $null = $command.Append('C:\Users\burtn\AppData\Local\Microsoft\WindowsApps\python3.11.exe')
+    $null = $command.Append(' C:\Users\burtn\Development\py\capsule_parse_jobtitle.py ')
+    $null = $command.Append("rulesfile=$jobrules_file")
+    $null = $command.Append(' ')
+    $null = $command.Append("personsfile=$person_file")
+    $null = $command.Append(' ')
+    $null = $command.Append("clientsfile=$organisation_file")
+    $null = $command.Append(' ')
+    $null = $command.Append("outputfile=$output_file")
+    $null = $command.Append(' ')
+    $null = $command.Append("debug=$debugflag")
+    $null = $command.Append(' ')
+    $null = $command.Append("delimiter='"+$delimiter+"'")
+    #$null = $command.Append('"')
+
+
+    Write-Output $command.ToString()
+    Invoke-Expression "& $command"
+    #Invoke-Expression $var -OutVariable | Tee-Object -Variable $out
+}
+
+

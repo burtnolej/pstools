@@ -5,26 +5,66 @@ function Install-ToolsZip {
         [Parameter(Mandatory)]
         [String]$ZipFilePath,
         [Parameter(Mandatory)]
-        [String]$DestinationPath
+        [String]$DestinationPath,
+        [Parameter(Mandatory)]
+        [String]$LinkFolder,
+        [Parameter(Mandatory)]
+        [String]$TargetPath,
+        [Parameter(Mandatory)]
+        [String]$IconLocation
     )
  
+    $output=$null
+
+    if (Test-Path -Path $DestinationPath) {
+        Remove-Item -Path $DestinationPath -Recurse -Force
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "Check if Deploy folder already exists" `
+                -object $zipfile `
+                -message "Removed"
+        Write-Host $output
+        $output=$null
+    }
+
+    if (Test-Path -Path $DestinationPath) {
+    }
+    else {
+        $Folder = New-Item -ItemType Directory -Path $DestinationPath
+    }
+
+    $output=$null
+
     Expand-Archive -LiteralPath $ZipFilePath -DestinationPath $DestinationPath
 
     # Create shortcut file and put on the desktop
-    $shortcutFile = "$lnk_folder\" + "velox.lnk"
+    $shortcutFile = "$LinkFolder\" + "velox.lnk"
 
     try {
         $WScriptShell = New-Object -ComObject WScript.Shell
         $shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-        $shortcut.TargetPath = $launch_file
-        $shortcut.IconLocation = $icon_file
+        $shortcut.TargetPath = $TargetPath
+        $shortcut.IconLocation = $IconLocation
         $shortcut.Save()
+
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "Create Shortcut" `
+                -object $shortcutFile `
+                -message "Created"
+        Write-Host $output
+
     }
     catch {
-        Log-Output "ERROR" "Create Shortcut" $ShortcutFile "Failed", $_
-        exit
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "Create Shortcut" `
+                -object "foo" `
+                -message "Failed" `
+                -errormsg $_
+        Write-Host $output
+        $output=$null
     }
-    Log-Output "OK" "Create Shortcut" $ShortcutFile "Created"
 }
 
 function Create-ToolsZip {
@@ -40,6 +80,7 @@ function Create-ToolsZip {
         [String]$icon_file  
     )
 
+    $output=$null
     $input_files_string=""
 
     for ($i=0; $i -lt $imagefilenames.Length; $i++) {
@@ -65,7 +106,12 @@ function Create-ToolsZip {
     # remove the target Zip if it exists
     if (Test-Path -Path $zipfile) {
         Remove-Item  $zipfile
-        Log-Output "OK" "Check Old Zip" $zipfile "Removed"
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "Check Old Zip" `
+                -object $zipfile `
+                -message "Removed"
+        Write-Host $output
     }
 
     $compress = @{
@@ -77,11 +123,21 @@ function Create-ToolsZip {
 
     # Check that the target folder exists
     if (Test-Path -Path $zipfile) {
-        Log-Output "OK" "Check Zip File" $zipfile "Created"
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "Check Zip File" `
+                -object $zipfile `
+                -message "Created" `
+                -errormsg ""
+        Write-Host $output
     } 
     else {
-        Log-Output "ERROR" "Check Zip File" $zipfile "Not Created!"
-        exit
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "Check Zip File" `
+                -object $zipfile `
+                -message "Not Created!"
+        Write-Host $output
     }
 }
 
@@ -94,6 +150,7 @@ function Gen-Icon {
         [String]$icon_file
     )
 
+    $output = $null
     $pngs = @("96x96.png","72x72.png","64x64.png","48x48.png","36x36.png","32x32.png","24x24.png","16x16.png")
 
     $command = New-Object -TypeName System.Text.StringBuilder
@@ -114,7 +171,13 @@ function Gen-Icon {
 
     Invoke-Expression "& $command.ToString()"
 
-    
+    Log-Output -result ([ref]$output) `
+            -status "OK" `
+            -action "Run Status" `
+            -object $icon_file `
+            -message "icon file written"
+    Write-Host $output
+
     # &"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" .\96x96.png .\72x72.png .\64x64.png .\48x48.png .\36x36.png .\32x32.png .\24x24.png .\16x16.png velox.ico
 }
 
@@ -167,12 +230,22 @@ function Write-OneDrive {
     $CLIENTRUNTIMEDLL="C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
     
     if (Test-Path -Path $CLIENTDLL) {
-        Log-Output -result ([ref]$output) -status "OK" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Found!"
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "Check Onedrive DLLs" `
+                -object $CLIENTDLL `
+                -message "Found!"
         write-host  $output
+        $output=$null
     }
     else {
-        Log-Output -result ([ref]$output) -status "ERROR" -action "Check Onedrive DLLs" -object $CLIENTDLL -message "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "Check Onedrive DLLs" `
+                -object $CLIENTDLL `
+                -message "Install : https://www.microsoft.com/en-us/download/details.aspx?id=42038"
         write-host  $output
+        $output=$null
     }
 
     Add-Type -Path $CLIENTDLL
@@ -194,13 +267,17 @@ function Write-OneDrive {
         }
     }       
     catch {
-            Log-Output -result ([ref]$output) -status "ERROR" -action "Get Credential" -object $AdminName -message "Failed" -errormsg  $_
-            write-host $output
-            exit
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "Get Credential" `
+                -object $AdminName `
+                -message "Failed" `
+                -errormsg  $_
+        write-host $output
+        $output=$null
     }
 
     
-
     #Set up the context
     $Context = New-Object Microsoft.SharePoint.Client.ClientContext($WebUrl)
     $Context.Credentials = $Credentials
@@ -224,8 +301,15 @@ function Write-OneDrive {
     
     #Close file stream
     $FileStream.Close()
-    
-    write-host "File has been uploaded!"
+ 
+    Log-Output -result ([ref]$output) `
+            -status "NOTIFY" `
+            -action "Status Update" `
+            -object "foo" `
+            -message "File has been uploaded"
+    write-host  $output
+    $output=$null
+
 }
 
 function Get-OneDrive{
@@ -284,14 +368,20 @@ function Get-OneDrive{
     
     $FileUrl = $FileFolder + "/" + $FileUrl
 
-    $Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
+    write-host     $FileUrl
+    #$Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
     try {
         #$Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password)
-        $Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
+        #$Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
         $FileInfo = [Microsoft.SharePoint.Client.File]::OpenBinaryDirect($Context,$FileUrl)
     }
     catch {
-        Log-Output -result ([ref]$output) -status "ERROR" -action "Sharepoint Logon" -object $AdminName -message "Failed" -errormsg  $_
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "Sharepoint Logon" `
+                -object $AdminName `
+                -message "Failed" `
+                -errormsg  $_
         write-host $output
         exit
     }

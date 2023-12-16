@@ -20,9 +20,9 @@ function Install-ToolsZip {
         Remove-Item -Path $DestinationPath -Recurse -Force
         Log-Output -result ([ref]$output) `
                 -status "OK" `
-                -action "Check if Deploy folder already exists" `
+                -action "Check Deploy folder" `
                 -object $zipfile `
-                -message "Removed"
+                -message "Exists/Removed"
         Write-Host $output
         $output=$null
     }
@@ -36,6 +36,12 @@ function Install-ToolsZip {
     $output=$null
 
     Expand-Archive -LiteralPath $ZipFilePath -DestinationPath $DestinationPath
+    Log-Output -result ([ref]$output) `
+            -status "OK" `
+            -action "Archive Expanded" `
+            -object $ZipFilePath `
+            -message $DestinationPath
+    Write-Host $output
 
     # Create shortcut file and put on the desktop
     $shortcutFile = "$LinkFolder\" + "velox.lnk"
@@ -198,13 +204,13 @@ function Log-Output {
     
     $null = $sb.Append($LOGTIME.PadRight(18," "))
     $null = $sb.Append($status.PadRight(7," "))
-    $null = $sb.Append($action.PadRight(20," "))
-    $null = $sb.Append($message.PadRight(20," "))
+    $null = $sb.Append($action.PadRight(25," "))
+    $null = $sb.Append($message.PadRight(50," "))
     $null = $sb.Append($object.PadRight(100," "))
     
 
     if ($PSBoundParameters.ContainsKey('errormsg')) {
-        $null = $result.Append($errormsg)
+        $null = $sb.Append($errormsg)
     }
     $result.value = $sb.ToString()
 }
@@ -344,10 +350,12 @@ function Get-OneDrive{
     Add-Type -Path $CLIENTDLL
     Add-Type -Path $CLIENTRUNTIMEDLL
 
-    $AdminPassword ="4o5yWohgxOB8"
+    if ($AdminName -eq "jon.butler@veloxfintech.com") {
+        $AdminPassword ="4o5yWohgxOB8"
+        $SecurePassword = ConvertTo-SecureString $AdminPassword -AsPlainText -Force
+    }
 
-    $SecurePassword = ConvertTo-SecureString $AdminPassword -AsPlainText -Force
-
+    
     $Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
 
     try {
@@ -368,11 +376,7 @@ function Get-OneDrive{
     
     $FileUrl = $FileFolder + "/" + $FileUrl
 
-    write-host     $FileUrl
-    #$Context = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrl)
     try {
-        #$Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$Credential.Password)
-        #$Context.Credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($AdminName,$SecurePassword)
         $FileInfo = [Microsoft.SharePoint.Client.File]::OpenBinaryDirect($Context,$FileUrl)
     }
     catch {

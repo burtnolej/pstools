@@ -483,6 +483,52 @@ function Move-NewJobTitlesCsv {
     return $File.Name
 }
 
+
+
+function Run-BashScript {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [String]$script_name,
+        [Parameter(Mandatory)]
+        [String]$source_file,
+        [Parameter(Mandatory)]
+        [String]$target_folder)
+
+    $command = New-Object -TypeName System.Text.StringBuilder
+    $output=$null
+
+    if (Test-Path -Path source_file) {
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "check for source file" `
+                -object $source_file `
+                -message "found"
+        write-host  $output
+    }
+    else {
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "check for source file" `
+                -object $source_file `
+                -message "not found"
+        write-host  $output
+        exit
+    }
+
+    #$null = $command.Append('"')
+    $null = $command.Append('bash')
+    $null = $command.Append(' ')
+    $null = $command.Append($script_name)
+    $null = $command.Append(' ')
+    $null = $command.Append($source_file)
+
+    Write-Output $command.ToString()
+    Invoke-Expression "& $command"
+    #Invoke-Expression $var -OutVariable | Tee-Object -Variable $out
+}
+
+
 function Run-PythonJobParser {
     [CmdletBinding()]
     param (

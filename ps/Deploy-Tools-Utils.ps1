@@ -1,3 +1,14 @@
+function Deploy-ToolsExe {
+    Run-BashScript -script_name C:\Users\burtn\Development\ps\scp_www.sh `
+                -source_file C:\Users\burtn\Development\ps\Packup-Tools.exe `
+                -target_folder /var/www/veloxfintech.com/html/tools
+
+    Run-BashScript -script_name C:\Users\burtn\Development\ps\scp_www.sh `
+                -source_file C:\Users\burtn\Development\ps\Unpackup-Tools.exe `
+                -target_folder /var/www/veloxfintech.com/html/tools
+}
+
+
 function Tools-Packup {
     [CmdletBinding()]
     param (

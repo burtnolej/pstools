@@ -1,4 +1,10 @@
 
+function Set-ConsoleColor ($bc, $fc) {
+    $Host.UI.RawUI.BackgroundColor = $bc
+    $Host.UI.RawUI.ForegroundColor = $fc
+    Clear-Host
+}
+
 function Install-ToolsZip {
     [CmdletBinding()]
     param (

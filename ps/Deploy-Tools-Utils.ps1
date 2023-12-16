@@ -10,7 +10,7 @@ function Tools-Packup {
 
     $icon_folder=Join-Path -Path $MYHOME -ChildPath "Development\icons\darkemblem"
     $tmp_zipfile=Join-Path -Path $MYHOME -ChildPath "Downloads"
-    $tmp_zipfile=Join-Path -Path $tmp_zipfile -ChildPath "Tools.zip"
+    
 
     Log-Output -result ([ref]$output) `
             -status "NOTIFY" `
@@ -19,20 +19,16 @@ function Tools-Packup {
             -message ""
     Write-Host $output
 
-    #Gen-Icon "C:\Users\burtn\Development\icons\darkemblem" "velox.ico"
     Gen-Icon $icon_folder "velox.ico"
 
     $icon_file=Join-Path -Path $icon_folder -ChildPath "velox.ico"
 
     Create-ToolsZip "//wsl.localhost/Ubuntu/home/burtnolej/sambashare/veloxmon/excelvba" `
         @("DV.xlsm","VBAUtils.xlsm","MV.xlsm","MO.xlsm") `
-        tmp_zipfile `
+        $tmp_zipfile `
         $icon_file
 
-    #Create-ToolsZip "//wsl.localhost/Ubuntu/home/burtnolej/sambashare/veloxmon/excelvba" `
-    #    @("DV.xlsm","VBAUtils.xlsm","MV.xlsm","MO.xlsm") `
-    #    "C:\Users\burtn\Downloads" `
-    #    "C:\Users\burtn\Development\icons\darkemblem\velox.ico"
+    $tmp_zipfile=Join-Path -Path $tmp_zipfile -ChildPath "Tools.zip"
 
     Write-OneDrive $AdminName `
         $tmp_zipfile `

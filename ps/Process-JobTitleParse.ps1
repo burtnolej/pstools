@@ -1,14 +1,17 @@
-﻿
+﻿Set-Location -Path "C:\Users\burtn\Development\ps"
+
 # load the utilites script
 $WORKINGDIR = Get-Location
 $MYHOME=Get-Content -Path Env:\HOMEPATH
 $utils_file = Join-Path -Path $WORKINGDIR -ChildPath ".\Tools-utils.ps1"
-#$utils_file = Join-Path -Path $WORKINGDIR -ChildPath "Development\ps\Tools-utils.ps1"
-#. $utils_file 
-.  "./Tools-utils.ps1"
+#$utils_file = Join-Path -Path $WORKINGDIR -ChildPath "Development\ps\Tools-Utils.ps1"
+. $utils_file 
+#.  "./Tools-utils.ps1"
 
 $output=$null
-$file_to_process
+#$file_to_process
+
+Set-ConsoleColor 'cyan' 'black'
 
 for ($i=1; $i=2; $i++)
 {

@@ -483,8 +483,6 @@ function Move-NewJobTitlesCsv {
     return $File.Name
 }
 
-
-
 function Run-BashScript {
     [CmdletBinding()]
     param (
@@ -495,10 +493,13 @@ function Run-BashScript {
         [Parameter(Mandatory)]
         [String]$target_folder)
 
+    Set-Location -Path C:\Users\burtn\Development\ps
+
+
     $command = New-Object -TypeName System.Text.StringBuilder
     $output=$null
 
-    if (Test-Path -Path source_file) {
+    if (Test-Path -Path $source_file) {
         Log-Output -result ([ref]$output) `
                 -status "OK" `
                 -action "check for source file" `
@@ -522,12 +523,13 @@ function Run-BashScript {
     $null = $command.Append($script_name)
     $null = $command.Append(' ')
     $null = $command.Append($source_file)
+    $null = $command.Append(' ')
+    $null = $command.Append($target_folder)
 
     Write-Output $command.ToString()
     Invoke-Expression "& $command"
     #Invoke-Expression $var -OutVariable | Tee-Object -Variable $out
 }
-
 
 function Run-PythonJobParser {
     [CmdletBinding()]
@@ -571,4 +573,63 @@ function Run-PythonJobParser {
     #Invoke-Expression $var -OutVariable | Tee-Object -Variable $out
 }
 
+function Install-SharepointDLL {
 
+    $output=$null
+
+    #Parameters
+    $DownloadURL = "https://download.microsoft.com/download/B/3/D/B3DA6839-B852-41B3-A9DF-0AFA926242F2/sharepointclientcomponents_16-6906-1200_x64-en-us.msi"
+    $Assemblies= @(
+            "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll",
+            "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll"
+        )
+ 
+    #Check if all assemblies given in the list are found
+    $FileExist = $True
+    ForEach ($File in $Assemblies)
+    {
+        #Check if CSOM Assemblies are Found
+        If(!(Test-Path $File))
+        {
+            $FileExist = $False; Break;
+        }
+    }
+ 
+    #Download and Install CSOM Assemblies
+    If(!$FileExist)
+    {
+        #Download the SharePoint Online Client SDK
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "Check for SP DLL's" `
+                -object "" `
+                -message "Missing, Downloading ..."
+        Write-Host $output
+
+        $InstallerPath = "$Env:TEMP\SharePointOnlineClientComponents16.msi"
+        Invoke-WebRequest $DownloadURL -OutFile $InstallerPath
+
+     
+        #Start Installation
+        Start-Process MSIExec.exe -ArgumentList "/i $InstallerPath /qb" -Wait
+
+        Log-Output -result ([ref]$output) `
+                -status "NOTIFY" `
+                -action "Installing SP DLL's" `
+                -object "" `
+                -message "Done ..."
+        Write-Host $output
+
+    }
+    Else
+    {
+        Log-Output -result ([ref]$output) `
+                -status "NOTIFY" `
+                -action "Check for SP DLL's" `
+                -object "" `
+                -message "Already Installed"
+        Write-Host $output
+    }
+
+    #Read more: https://www.sharepointdiary.com/2018/12/download-install-sharepoint-online-client-side-sdk-using-powershell.html#ixzz8M9JYE2ci
+}

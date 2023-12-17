@@ -1,11 +1,43 @@
 function Deploy-ToolsExe {
-    Run-BashScript -script_name C:\Users\burtn\Development\ps\scp_www.sh `
-                -source_file C:\Users\burtn\Development\ps\Packup-Tools.exe `
-                -target_folder /var/www/veloxfintech.com/html/tools
 
-    Run-BashScript -script_name C:\Users\burtn\Development\ps\scp_www.sh `
-                -source_file C:\Users\burtn\Development\ps\Unpackup-Tools.exe `
-                -target_folder /var/www/veloxfintech.com/html/tools
+    $script_name="./scp_uat5.sh"
+    $source_file="./Packup-Tools.exe"
+    $target_folder="/var/www/veloxfintech.com/html/tools"
+
+    $output=$null
+
+    if (Test-Path -Path $script_name) {
+        Log-Output -result ([ref]$output) `
+                -status "OK" `
+                -action "check for script" `
+                -object $script_name `
+                -message "found"
+        write-host  $output
+    }
+    else {
+        Log-Output -result ([ref]$output) `
+                -status "ERROR" `
+                -action "check for script" `
+                -object $script_name `
+                -message "not found"
+        write-host  $output
+        exit
+    }
+
+    $Assemblies= @(
+            "./Packup-Tools.exe",
+            "./Unpackup-Tools.exe",
+            "./Unpackup-Tools-Nodep.exe",
+            "./Unpackup-Tools-Nodep.ps1"
+        )
+ 
+    #Check if all assemblies given in the list are found
+    ForEach ($source_file in $Assemblies)
+    {
+        Run-BashScript -script_name $script_name `
+                    -source_file $source_file `
+                    -target_folder $target_folder
+    }
 }
 
 

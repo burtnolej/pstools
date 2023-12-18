@@ -98,8 +98,9 @@ function Create-ToolsZip {
     for ($i=0; $i -lt $imagefilenames.Length; $i++) {
 
         # xlsm lives in a folder of the same name
-        $input_file =  $imagefilenames[$i] + "\" + $imagefilenames[$i]
-        $input_file = Join-Path -Path $imagefiles_folder -ChildPath  $input_file
+        #$input_file =  $imagefilenames[$i] + "\" + $imagefilenames[$i]
+        #$input_file = Join-Path -Path $imagefiles_folder -ChildPath  $input_file
+        $input_file = Join-Path -Path $imagefiles_folder -ChildPath  $imagefilenames[$i]
         $input_file = '"' + $input_file + '"'
 
         if ($input_files_string -eq "") {

@@ -67,7 +67,7 @@ function Tools-Packup {
     $icon_file=Join-Path -Path $icon_folder -ChildPath "velox.ico"
 
     Create-ToolsZip "//wsl.localhost/Ubuntu/home/burtnolej/sambashare/veloxmon/excelvba" `
-        @("DV.xlsm","VBAUtils.xlsm","MV.xlsm","MO.xlsm") `
+        @("DV.xlsm\DV.xlsm","VBAUtils.xlsm\VBAUtils.xlsm","MV.xlsm\MV.xlsm","MO.xlsm\MO.xlsm","MV.xlsm\MondayViewUpdate_Template.xlsm") `
         $tmp_zipfile `
         $icon_file
 

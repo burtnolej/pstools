@@ -1,7 +1,4 @@
-﻿ param (
-    [string]$working_dir = "C:\Users\burtn\Development\ps",
-    [string]$desktop_folder
- )
+﻿
 
 Read-Host "Installing ..... Press RETURN to continue"
 

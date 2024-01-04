@@ -68,10 +68,11 @@ def get_rulesets(rulesfile, delimiter="^"):
                 line=line.replace("\n","")
                 _line =line.split(delimiter)
 
-                if _line[0] in rulesets.keys():
-                        rulesets[_line[0]].append(_line)
-                else:	
-                        rulesets[_line[0]] = [line.split(delimiter)]
+                if _line[0]!="":
+                        if _line[0] in rulesets.keys():
+                                rulesets[_line[0]].append(_line)
+                        else:	
+                                rulesets[_line[0]] = [line.split(delimiter)]
         fh.close()
         return rulesets
 
@@ -187,6 +188,11 @@ for _person in persons:
                         value=_rule[1]
                         match=1
 
+                        
+                        # for debugging
+                        #print(_person["jobtitle"],_person["id"],constraints, category, value)
+                        
+                        
                         for i in range(0,len(constraints)):
                                 _constraint = constraints[i]
                                 if _constraint.find("!")==-1:
